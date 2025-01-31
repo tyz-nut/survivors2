@@ -8,11 +8,6 @@
 class Enemy
 {
 public:
-    enum class Spawnedge
-    {
-        Up, Down, Left, Right,
-    };
-
     enum class Facing
     {
         Up, Down, Left, Right
@@ -38,6 +33,8 @@ public:
         current_anim->on_render(camera);
     }
 
+    virtual void reset_current_anim() {}
+
     void set_position(const Vector2& position)
     {
         this->position = position;
@@ -54,7 +51,7 @@ public:
         this->velocity = velocity;
     }
 
-    const Vector2& get_velocity()
+    const Vector2& get_velocity() const
     {
         return velocity;
     }
@@ -64,7 +61,7 @@ public:
         this->enemy_hp = enemy_hp;
     }
 
-    const int get_hp()
+    const int get_hp() const
     {
         return enemy_hp;
     }
@@ -74,6 +71,11 @@ public:
     void set_target_position(const Vector2 position)
     {
         this->target_position = position;
+    }
+
+    void set_move_range(const Vector2& bk)
+    {
+        background = bk;
     }
 
     void Hurt()
@@ -96,6 +98,7 @@ protected:
     Vector2 position;
     Vector2 target_position;
     Vector2 velocity;
+    Vector2 background;
     Animation* current_anim = nullptr;
     bool facing_left = false;
     bool alive = true;

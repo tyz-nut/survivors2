@@ -22,10 +22,17 @@ void PlayerManager::player_init()
     }
 }
 
-void PlayerManager::reset_position(const Vector2& background)
+void PlayerManager::player_on_game(const Map& map)
 {
-    Vector2 position = Vector2(background.x / 2.0f, background.y / 2.0f);
-    for (int i = 0; i < player_max_num; i++)
+    reset_position(map.player_position);
+    set_move_range(map.area);
+    reset_current_anim();
+    reset_hp();
+}
+
+void PlayerManager::reset_position(const Vector2& position)
+{
+    for (int i = 0; i < players.size(); i++)
     {
         players[i]->set_position(position);
     }
@@ -33,7 +40,7 @@ void PlayerManager::reset_position(const Vector2& background)
 
 void PlayerManager::reset_hp()
 {
-    for (int i = 0; i < player_max_num; i++)
+    for (int i = 0; i < players.size(); i++)
     {
         players[i]->reset_hp();
     }
@@ -47,11 +54,11 @@ void PlayerManager::reset_current_anim()
     }
 }
 
-void PlayerManager::set_move_range(const Vector2 background)
+void PlayerManager::set_move_range(const Vector2& area)
 {
     for (auto itor : players)
     {
-        itor->set_move_range(background);
+        itor->set_move_range(area);
     }
 }
 

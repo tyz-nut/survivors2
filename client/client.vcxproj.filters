@@ -45,6 +45,9 @@
     <ClCompile Include="collision_manager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="enemy_manager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources_manager.h">
@@ -120,6 +123,12 @@
       <Filter>头文件\foundation</Filter>
     </ClInclude>
     <ClInclude Include="player_manager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_manager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="map_manager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

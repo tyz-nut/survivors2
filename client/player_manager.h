@@ -5,6 +5,7 @@
 #include "player_hajimi.h"
 #include "player_manbo.h"
 #include "player_paimeng.h"
+#include "map_manager.h"
 
 #include <vector>
 
@@ -29,13 +30,15 @@ public:
 
     void player_init();
 
-    void reset_position(const Vector2& background);
+    void player_on_game(const Map& map);
+
+    void reset_position(const Vector2& position);
 
     void reset_hp();
 
     void reset_current_anim();
 
-    void set_move_range(const Vector2 background);
+    void set_move_range(const Vector2& area);
 
     const Vector2& get_self_position();
 

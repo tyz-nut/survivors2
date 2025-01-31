@@ -14,7 +14,7 @@ PlayerServer* player_2 = new PlayerServer();
 std::vector<PlayerServer*> players = { player_1, player_2 };
 
 
-void split_string(const std::string& s, std::vector<std::string>& v, const char c)
+static void split_string(const std::string& s, std::vector<std::string>& v, const char c)
 {
 	std::string::size_type pos1, pos2;
 	pos2 = s.find(c);

@@ -8,37 +8,15 @@ class EnemyPig : public Enemy
 public:
     EnemyPig()
     {
-        Enemy();
+        anim_run_left.set_loop(true);
+        anim_run_left.set_interval(0.1f);
+        anim_run_left.add_frame(ResourcesManager::instance()->find_atlas("pig_left"));
 
-        anim_idle_up.set_loop(true);
-        anim_idle_up.set_interval(0.1f);
-        anim_idle_up.add_frame(ResourcesManager::instance()->find_atlas("hajimi_idle_up"));
+        anim_run_right.set_loop(true);
+        anim_run_right.set_interval(0.1f);
+        anim_run_right.add_frame(ResourcesManager::instance()->find_atlas("pig_right"));
 
         img_shadow = ResourcesManager::instance()->find_image("shadow_pig");
-
-        anim_left = new Animation(atlas_enemy_left, 45);
-        anim_right = new Animation(atlas_enemy_right, 45);
-
-        Spawnedge edge = (Spawnedge)(rand() % 4);
-        switch (edge)
-        {
-        case Spawnedge::Up:
-            enemy_position.x = rand() % WINDOW_WIDTH;
-            enemy_position.y = -ENEMY_HEIGHT;
-            break;
-        case Spawnedge::Down:
-            enemy_position.x = rand() % WINDOW_WIDTH;
-            enemy_position.y = -WINDOW_HEIGHT;
-            break;
-        case Spawnedge::Left:
-            enemy_position.x = -ENEMY_WIDTH;
-            enemy_position.y = rand() % WINDOW_HEIGHT;
-            break;
-        case Spawnedge::Right:
-            enemy_position.x = -WINDOW_WIDTH;
-            enemy_position.y = rand() % WINDOW_HEIGHT;
-            break;
-        }
     }
     ~EnemyPig() = default;
 
@@ -76,7 +54,7 @@ public:
             position.y + ENEMY_HEIGHT - 35,
             img_shadow->getwidth(), img_shadow->getheight()
         };
-        putimage_ex(camera, &img_shadow, &rect_shadow);
+        putimage_ex(camera, img_shadow, &rect_shadow);
 
 
         Enemy::on_render(camera);

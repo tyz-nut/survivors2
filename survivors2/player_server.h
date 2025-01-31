@@ -26,7 +26,7 @@ public:
 		this->velocity = velocity;
 	}
 
-	Vector2 get_velocity()
+	const Vector2& get_velocity() const
 	{
 		return velocity;
 	}
@@ -36,7 +36,7 @@ public:
 		this->player_id = player_id;
 	}
 
-	int get_id()
+	int get_id() const
 	{
 		return player_id;
 	}
@@ -46,7 +46,7 @@ public:
 		this->hp = hp;
 	}
 
-	int get_hp()
+	int get_hp() const
 	{
 		return hp;
 	}

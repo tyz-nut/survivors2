@@ -6,6 +6,7 @@
 #include "countdown.h"
 #include "resources_manager.h"
 #include "player_manager.h"
+#include "enemy_manager.h"
 
 extern bool is_debug;
 extern httplib::Client* client;
@@ -30,13 +31,13 @@ public:
 
     void on_enter()
     {
-        PlayerManager::instance()->reset_position(background);
-        PlayerManager::instance()->set_move_range(background);
-        PlayerManager::instance()->reset_current_anim();
-        PlayerManager::instance()->reset_hp();
+        map = MapManager::instance()->find_map("default");
+        PlayerManager::instance()->player_on_game(map);
+        EnemyManager::instance()->enemy_on_game(map);
+        
         player_self_position = PlayerManager::instance()->get_self_position();
         player_self_velocity = PlayerManager::instance()->get_self_velocity();
-        img_background = ResourcesManager::instance()->find_image("background");
+        img_background = ResourcesManager::instance()->find_image(map.name);
 
         std::thread([&]()
 		{
@@ -165,6 +166,7 @@ public:
         player_self_velocity = PlayerManager::instance()->get_self_velocity();
 
         PlayerManager::instance()->on_update(delta);
+        EnemyManager::instance()->on_update(delta);
 
         if (stage == GameStage::Ready)
         {
@@ -257,6 +259,7 @@ public:
     {
         draw_background();
 
+        EnemyManager::instance()->on_render(camera_scene);
         PlayerManager::instance()->on_render(camera_scene);
 
         if (stage == GameStage::Ready)
@@ -352,7 +355,7 @@ private:
 	Vector2 player_self_position;
     Vector2 player_self_velocity;
 	std::vector<Vector2> players_position;
-    Vector2 background = Vector2(2560, 1440);
+    Map map;
     IMAGE* img_background;
     GameStage stage = GameStage::Ready;
     bool is_debug = false;
@@ -384,7 +387,7 @@ private:
         static const Rect rect_bg =
         {
             0, 0,
-            (int)background.x, (int)background.y
+            (int)map.area.x, (int)map.area.y
         };
         putimage_ex(camera_scene, img_background, &rect_bg);
     }

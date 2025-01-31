@@ -2,6 +2,7 @@
 
 
 #include "player.h"
+#include "enemy.h"
 #include "resources_manager.h"
 #include "scene_manager.h"
 #include "event2.h"
@@ -24,6 +25,7 @@ Scene* game_scene = nullptr;
 Scene* waiting_scene = nullptr;
 Player* player_self = nullptr;
 std::vector<Player*> players;
+std::vector<Enemy*> enemys;
 const int player_max_num = 2;
 const int window_width = 1280;
 const int window_height = 720;
