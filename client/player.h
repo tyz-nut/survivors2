@@ -6,6 +6,7 @@ extern const int window_height;
 
 #include "animation.h"
 #include "resources_manager.h"
+#include "collision_manager.h"
 
 class Player
 {
@@ -16,8 +17,17 @@ public:
 	};
 
 public:
-	Player() = default;
-	~Player() = default;
+	Player()
+	{
+		hit_box = CollisionManager::instance()->create_collision_box();
+		hurt_box = CollisionManager::instance()->create_collision_box();
+	}
+
+	~Player()
+	{
+		CollisionManager::instance()->destroy_collision_box(hit_box);
+		CollisionManager::instance()->destroy_collision_box(hurt_box);
+	}
 
     virtual void on_input(const ExMessage& msg)
     {
@@ -35,9 +45,11 @@ public:
                 is_move_right = true;
                 break;
             case 0x57:  //W
+			case VK_UP:
                 is_move_up = true;
                 break;
             case 0x53:  //S
+			case VK_DOWN:
                 is_move_down = true;
                 break;
             }
@@ -54,9 +66,11 @@ public:
                 is_move_right = false;
                 break;
             case 0x57:  //W
+			case VK_UP:
                 is_move_up = false;
                 break;
             case 0x53:  //S
+			case VK_DOWN:
                 is_move_down = false;
             }
             break;
@@ -69,8 +83,8 @@ public:
 		{
 			int dir_x = is_move_right - is_move_left;
 			int dir_y = is_move_down - is_move_up;
-			Vector2 dir = Vector2((float)dir_x, (float)dir_y);
-			velocity = dir.normalize() * SPEED_RUN;
+			Vector2 dir = Vector2((float)dir_x, (float)dir_y).normalize();
+			velocity = dir * SPEED_RUN;
 			position += velocity * delta;
 		}
 		else
@@ -123,6 +137,18 @@ public:
 		return player_id;
 	}
 
+	void set_hp(int player_hp)
+	{
+		this->player_hp = player_hp;
+	}
+
+	const int get_hp()
+	{
+		return player_hp;
+	}
+
+	virtual void reset_hp(){}
+
 	void set_can_control()
 	{
 		can_control = true;
@@ -136,6 +162,7 @@ public:
 protected:
 	const float SPEED_RUN = 200.0f;
 	int player_id = -1;
+	int player_hp = 1;
 	bool can_control = false;
 
 	bool is_move_right = false;
@@ -149,6 +176,12 @@ protected:
 	Vector2 velocity;
 	Vector2 background;
 	Animation* current_anim = nullptr;
+	bool is_invulnerable = false;
+	Timer timer_invulnerable_blink; //无敌闪烁定时器
+	Timer timer_invulnerable_status;//无敌状态定时器
+	bool is_blink_invisible = false;//是否为闪烁不可见帧
+	CollisionBox* hit_box = nullptr;
+	CollisionBox* hurt_box = nullptr;
 };
 
 #endif // !_PLAYER_H_

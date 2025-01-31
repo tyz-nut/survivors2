@@ -19,6 +19,15 @@
     <Filter Include="头文件\player">
       <UniqueIdentifier>{72a06f53-0582-483c-9f08-149b928a45cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\collision">
+      <UniqueIdentifier>{1f81ff3f-565e-4f78-8b47-cd74abe958c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\enemy">
+      <UniqueIdentifier>{dc4c00e0-6472-4648-91c9-d8934ac84aee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\foundation">
+      <UniqueIdentifier>{0a444c34-952e-489a-8ded-8c61d958149b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="client.cpp">
@@ -33,26 +42,11 @@
     <ClCompile Include="player_manager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="collision_manager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="vector2.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="util.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="atlas.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="animation.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="timer.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="resources_manager.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -89,10 +83,43 @@
     <ClInclude Include="player.h">
       <Filter>头文件\player</Filter>
     </ClInclude>
-    <ClInclude Include="player_manager.h">
+    <ClInclude Include="countdown.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="countdown.h">
+    <ClInclude Include="collision_box.h">
+      <Filter>头文件\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision_layer.h">
+      <Filter>头文件\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision_manager.h">
+      <Filter>头文件\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_pig.h">
+      <Filter>头文件\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>头文件\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="atlas.h">
+      <Filter>头文件\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>头文件\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>头文件\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2.h">
+      <Filter>头文件\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>头文件\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="player_manager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

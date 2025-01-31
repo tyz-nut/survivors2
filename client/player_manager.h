@@ -31,6 +31,8 @@ public:
 
     void reset_position(const Vector2& background);
 
+    void reset_hp();
+
     void reset_current_anim();
 
     void set_move_range(const Vector2 background);
@@ -39,9 +41,9 @@ public:
 
     const Vector2& get_self_velocity();
 
-    void set_players_position(std::vector<Vector2>& positions);
+    /*void set_players_position(std::vector<Vector2>& positions);
 
-    void set_players_velocity(std::vector<Vector2>& velocitys);
+    void set_players_velocity(std::vector<Vector2>& velocitys);*/
 
     Player* set_playerType(Player* player, PlayerType type);
 

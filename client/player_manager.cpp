@@ -31,6 +31,14 @@ void PlayerManager::reset_position(const Vector2& background)
     }
 }
 
+void PlayerManager::reset_hp()
+{
+    for (int i = 0; i < player_max_num; i++)
+    {
+        players[i]->reset_hp();
+    }
+}
+
 void PlayerManager::reset_current_anim()
 {
     for (auto itor : players)
@@ -57,25 +65,25 @@ const Vector2& PlayerManager::get_self_velocity()
     return player_self->get_velocity();
 }
 
-void PlayerManager::set_players_position(std::vector<Vector2>& positions)
-{
-    for (size_t i = 0; i < players.size(); i++)
-    {
-        if (player_self->get_id() == i)
-            return;
-        players[i]->set_position(positions[i]);
-    }
-}
-
-void PlayerManager::set_players_velocity(std::vector<Vector2>& velocitys)
-{
-    for (size_t i = 0; i < players.size(); i++)
-    {
-        if (player_self->get_id() == i)
-            return;
-        players[i]->set_position(velocitys[i]);
-    }
-}
+//void PlayerManager::set_players_position(std::vector<Vector2>& positions)
+//{
+//    for (size_t i = 0; i < players.size(); i++)
+//    {
+//        if (player_self->get_id() == i)
+//            continue;
+//        players[i]->set_position(positions[i]);
+//    }
+//}
+//
+//void PlayerManager::set_players_velocity(std::vector<Vector2>& velocitys)
+//{
+//    for (size_t i = 0; i < players.size(); i++)
+//    {
+//        if (player_self->get_id() == i)
+//            continue;
+//        players[i]->set_position(velocitys[i]);
+//    }
+//}
 
 Player* PlayerManager::set_playerType(Player* player, PlayerManager::PlayerType type)
 {
@@ -104,14 +112,14 @@ Player* PlayerManager::set_playerType(Player* player, PlayerManager::PlayerType 
 
 void PlayerManager::on_update(float delta)
 {
-    for (auto itor : players)
-        itor->on_update(delta);
+    for (size_t i = 0; i < players.size(); i++)
+        players[i]->on_update(delta);
 }
 
 void PlayerManager::on_render(const Camera& camera)
 {
-    for (auto itor : players)
-        itor->on_render(camera);
+    for (size_t i = 0; i < players.size(); i++)
+        players[i]->on_render(camera);
 }
 
 void PlayerManager::on_input(const ExMessage& msg)

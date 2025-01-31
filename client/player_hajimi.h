@@ -3,13 +3,24 @@
 
 #include "player.h"
 
-
 class PlayerHajimi : public Player
 {
 public:
 	PlayerHajimi()
 	{
-		Player();
+		timer_invulnerable_status.set_wait_time(1.0f);
+		timer_invulnerable_status.set_one_shot(true);
+		timer_invulnerable_status.set_on_timeout([&]()
+			{
+				is_invulnerable = false;
+			});
+
+		timer_invulnerable_blink.set_wait_time(0.075f);
+		timer_invulnerable_blink.set_one_shot(false);
+		timer_invulnerable_blink.set_on_timeout([&]()
+			{
+				is_blink_invisible = !is_blink_invisible;
+			});
 
 		anim_idle_up.set_loop(true);
 		anim_idle_up.set_interval(0.1f);
@@ -45,6 +56,11 @@ public:
 
 	}
 	~PlayerHajimi() = default;
+
+	void on_input(const ExMessage& msg)
+	{
+		Player::on_input(msg);
+	}
 
 	void on_update(float delta)
 	{
@@ -102,14 +118,14 @@ public:
 		Player::on_render(camera);
 	}
 
-	void on_input(const ExMessage& msg)
-	{
-		Player::on_input(msg);
-	}
-
 	void reset_current_anim()
 	{
 		this->current_anim = &anim_idle_down;
+	}
+
+	void reset_hp()
+	{
+		player_hp = 10;
 	}
 
 private:

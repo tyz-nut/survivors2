@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="client.cpp" />
+    <ClCompile Include="collision_manager.cpp" />
     <ClCompile Include="player_manager.cpp" />
     <ClCompile Include="resources_manager.cpp" />
     <ClCompile Include="scene_manager.cpp" />
@@ -137,7 +138,12 @@
     <ClInclude Include="atlas.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="collision_box.h" />
+    <ClInclude Include="collision_layer.h" />
+    <ClInclude Include="collision_manager.h" />
     <ClInclude Include="countdown.h" />
+    <ClInclude Include="enemy.h" />
+    <ClInclude Include="enemy_pig.h" />
     <ClInclude Include="event2.h" />
     <ClInclude Include="game_scene.h" />
     <ClInclude Include="menu_scene.h" />

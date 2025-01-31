@@ -33,8 +33,10 @@ public:
         PlayerManager::instance()->reset_position(background);
         PlayerManager::instance()->set_move_range(background);
         PlayerManager::instance()->reset_current_anim();
+        PlayerManager::instance()->reset_hp();
         player_self_position = PlayerManager::instance()->get_self_position();
         player_self_velocity = PlayerManager::instance()->get_self_velocity();
+        img_background = ResourcesManager::instance()->find_image("background");
 
         std::thread([&]()
 		{
@@ -57,11 +59,9 @@ public:
                     {
                         std::vector<std::string> info;
                         split_string(information[i], info, ';');
-                        position.push_back(Vector2::stoV(info[0]));
-                        velocity.push_back(Vector2::stoV(info[1]));
+                        players[i]->set_position(Vector2::stoV(info[0]));
+                        players[i]->set_velocity(Vector2::stoV(info[1]));
                     }
-                    PlayerManager::instance()->set_players_position(position);
-                    PlayerManager::instance()->set_players_velocity(velocity);
                     std::cout << "id == 0 " + players[0]->get_position().Vtos() + ";" + players[0]->get_velocity().Vtos() << " / ";
                     std::cout << "id == 1 " + players[1]->get_position().Vtos() + ";" + players[1]->get_velocity().Vtos() << std::endl;
 				}
@@ -70,8 +70,6 @@ public:
 		}).detach();
 
         countdown = new Countdown();
-
-        
 
         camera_ui.set_size({ 1280,720 });
         camera_scene.set_size({ 1280,720 });
@@ -355,6 +353,7 @@ private:
     Vector2 player_self_velocity;
 	std::vector<Vector2> players_position;
     Vector2 background = Vector2(2560, 1440);
+    IMAGE* img_background;
     GameStage stage = GameStage::Ready;
     bool is_debug = false;
 
@@ -381,7 +380,6 @@ private:
 private:
     void draw_background()
     {
-        IMAGE* img_background = ResourcesManager::instance()->find_image("background");
         //ªÊ÷∆±≥æ∞
         static const Rect rect_bg =
         {
