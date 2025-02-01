@@ -12,6 +12,7 @@ extern bool is_debug;
 extern httplib::Client* client;
 extern Player* player_self;
 extern std::vector<Player*> players;
+extern std::vector<Enemy*> enemys;
 extern const int player_max_num;
 extern const int window_width;
 extern const int window_height;
@@ -63,8 +64,8 @@ public:
                         players[i]->set_position(Vector2::stoV(info[0]));
                         players[i]->set_velocity(Vector2::stoV(info[1]));
                     }
-                    std::cout << "id == 0 " + players[0]->get_position().Vtos() + ";" + players[0]->get_velocity().Vtos() << " / ";
-                    std::cout << "id == 1 " + players[1]->get_position().Vtos() + ";" + players[1]->get_velocity().Vtos() << std::endl;
+                    /*std::cout << "id == 0 " + players[0]->get_position().Vtos() + ";" + players[0]->get_velocity().Vtos() << " / ";
+                    std::cout << "id == 1 " + players[1]->get_position().Vtos() + ";" + players[1]->get_velocity().Vtos() << std::endl;*/
 				}
 				std::this_thread::sleep_for(nanoseconds(1000000000 / 10));
 			}
@@ -112,61 +113,15 @@ public:
 //        status_bar_1P.set_position(235, 625);
 //        status_bar_2P.set_position(675, 625);
 //
-//        player_1->set_position(200, 50);
-//        player_2->set_position(975, 50);
-//        pos_img_sky.x = (getwidth() - img_sky.getwidth()) / 2;
-//        pos_img_sky.y = (getheight() - img_sky.getheight()) / 2;
-//        pos_img_hills.x = (getwidth() - img_hills.getwidth()) / 2;
-//        pos_img_hills.y = (getheight() - img_hills.getheight()) / 2;
-//
-//        platform_list.resize(4);
-//
-//        Platform& large_platform = platform_list[0];
-//        large_platform.img = &img_platform_large;
-//        large_platform.render_position.x = 122;
-//        large_platform.render_position.y = 455;
-//        large_platform.shape.left = (float)large_platform.render_position.x + 30;
-//        large_platform.shape.right = (float)large_platform.render_position.x + img_platform_large.getwidth() - 30;
-//        large_platform.shape.y = (float)large_platform.render_position.y + 60;
-//
-//        Platform& small_platform_1 = platform_list[1];
-//        small_platform_1.img = &img_platform_small;
-//        small_platform_1.render_position.x = 175;
-//        small_platform_1.render_position.y = 360;
-//        small_platform_1.shape.left = (float)small_platform_1.render_position.x + 40;
-//        small_platform_1.shape.right = (float)small_platform_1.render_position.x + img_platform_small.getwidth() - 40;
-//        small_platform_1.shape.y = (float)small_platform_1.render_position.y + img_platform_small.getheight() / 2;
-//
-//        Platform& small_platform_2 = platform_list[2];
-//        small_platform_2.img = &img_platform_small;
-//        small_platform_2.render_position.x = 855;
-//        small_platform_2.render_position.y = 360;
-//        small_platform_2.shape.left = (float)small_platform_2.render_position.x + 40;
-//        small_platform_2.shape.right = (float)small_platform_2.render_position.x + img_platform_small.getwidth() - 40;
-//        small_platform_2.shape.y = (float)small_platform_2.render_position.y + img_platform_small.getheight() / 2;
-//
-//        Platform& small_platform_3 = platform_list[3];
-//        small_platform_3.img = &img_platform_small;
-//        small_platform_3.render_position.x = 515;
-//        small_platform_3.render_position.y = 225;
-//        small_platform_3.shape.left = (float)small_platform_3.render_position.x + 40;
-//        small_platform_3.shape.right = (float)small_platform_3.render_position.x + img_platform_small.getwidth() - 40;
-//        small_platform_3.shape.y = (float)small_platform_3.render_position.y + img_platform_small.getheight() / 2;
-//
-//        mciSendString(_T("play bgm_game repeat from 0"), NULL, 0, NULL);
-//
-//
-//        
-//
     }
-//
+
     void on_update(float delta)
     {
+        PlayerManager::instance()->on_update(delta);
+
         player_self_position = PlayerManager::instance()->get_self_position();
         player_self_velocity = PlayerManager::instance()->get_self_velocity();
 
-        PlayerManager::instance()->on_update(delta);
-        EnemyManager::instance()->on_update(delta);
 
         if (stage == GameStage::Ready)
         {
@@ -181,7 +136,9 @@ public:
 
         if (stage == GameStage::Racing)
         {
-    
+            EnemyManager::instance()->set_target_position(player_self_position);
+            EnemyManager::instance()->on_update(delta);
+            std::cout << enemys[0]->get_position().Vtos() << std::endl;
             /*if ((id_player == 1 && progress_1 >= num_total_char)
                 || (id_player == 2 && progress_2 >= num_total_char))
             {

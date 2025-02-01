@@ -82,8 +82,7 @@ private:
     const int SHADOW_WIDTH = 48;
 
 private:
-    const int SPEED_RUN = 20;
-    bool facing_left = false;
+    const int SPEED_RUN = 200;
     bool alive = true;
 };
 

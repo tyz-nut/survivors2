@@ -1,9 +1,6 @@
 #include "../thirdparty/httplib.h"
 
 
-#include "player.h"
-#include "enemy.h"
-#include "resources_manager.h"
 #include "scene_manager.h"
 #include "event2.h"
 #include "game_scene.h"
@@ -56,8 +53,10 @@ int main(int argc, char** argv)
 	menu_scene = new MenuScene();
 	game_scene = new GameScene();
 	waiting_scene = new WaitingScene();
+	MapManager::instance()->map_init();
 	SceneManager::instance()->scene_init();
 	PlayerManager::instance()->player_init();
+	EnemyManager::instance()->enemy_init();
 	ExMessage msg;
 
 	//游戏时间初始化

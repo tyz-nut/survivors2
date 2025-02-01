@@ -4,6 +4,7 @@
 #include "timer.h"
 #include "util.h"
 #include "camera.h"
+#include "resources_manager.h"
 
 class Countdown
 {

@@ -130,6 +130,7 @@
     <ClCompile Include="client.cpp" />
     <ClCompile Include="collision_manager.cpp" />
     <ClCompile Include="enemy_manager.cpp" />
+    <ClCompile Include="map_manager.cpp" />
     <ClCompile Include="player_manager.cpp" />
     <ClCompile Include="resources_manager.cpp" />
     <ClCompile Include="scene_manager.cpp" />

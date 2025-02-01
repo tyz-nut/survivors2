@@ -160,7 +160,7 @@ public:
 	}
 
 protected:
-	const float SPEED_RUN = 200.0f;
+	const float SPEED_RUN = 400.0f;
 	int player_id = -1;
 	int player_hp = 1;
 	bool can_control = false;

@@ -18,7 +18,7 @@ struct AtlasResInfo
 
 static const std::vector<ImageResInfo> image_info_list =
 {
-    { "background", _T(R"(resources/background.png)")},
+    { "default", _T(R"(resources/background.png)")},
     { "ui_heart",   _T(R"(resources/ui_heart.png)")},
     { "menu",       _T(R"(resources/menu.png)")},
 

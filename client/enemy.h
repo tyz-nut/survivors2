@@ -88,11 +88,6 @@ public:
         return alive;
     }
 
-private:
-    const int ENEMY_WIDTH = 80;
-    const int ENEMY_HEIGHT = 80;
-    const int SHADOW_WIDTH = 48;
-
 protected:
     int enemy_hp = 1;
     Vector2 position;

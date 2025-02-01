@@ -21,52 +21,26 @@ class MapManager
 public:
 	static MapManager* instance();
 
-	const Map& find_map(std::string str) const
+	void map_init()
 	{
-		for (auto itor : maps)
-		{
-			if (itor->name.compare(str) == 0)
-			{
-				return *itor;
-			}
-		}
+		error = { 0,"",Vector2(0, 0), Vector2(0, 0), 0, 0 };
+		map_default = { 0, "default", Vector2(2560, 1440), Vector2(1280, 720), 1, 20 };
+		maps.push_back(&map_default);
 	}
 
-	const Map& find_map(int id) const
-	{
-		for (auto itor : maps)
-		{
-			if (itor->id == id)
-			{
-				return *itor;
-			}
-		}
-	}
+	const Map& find_map(std::string str) const;
+
+	const Map& find_map(int id) const;
 
 private:
 	static MapManager* manager;
+	Map error;
 	Map map_default;
 	std::vector<Map*> maps;
 
 private:
-	MapManager()
-	{
-		map_default = { 0, "default", Vector2(2560, 1440), Vector2(1280, 720), 1, 20 };
-		maps.push_back(&map_default);
-	}
+	MapManager() = default;
 	~MapManager() = default;
 };
-
-MapManager* MapManager::manager = nullptr;
-
-MapManager* MapManager::instance()
-{
-	if (!manager)
-	{
-		manager = new MapManager();
-	}
-
-	return manager;
-}
 
 #endif // !_MAP_MANAGER_

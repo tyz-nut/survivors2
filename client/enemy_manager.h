@@ -29,6 +29,8 @@ public:
 public:
     static EnemyManager* instance();
 
+    void enemy_init();
+
     void enemy_on_game(const Map& map);
 
     void reset_hp();
@@ -36,6 +38,8 @@ public:
     void reset_current_anim();
 
     void set_move_range(const Vector2& area);
+
+    void set_target_position(const Vector2& position);
 
     /*void set_players_position(std::vector<Vector2>& positions);
 

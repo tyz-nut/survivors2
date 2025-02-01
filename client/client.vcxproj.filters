@@ -48,6 +48,9 @@
     <ClCompile Include="enemy_manager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="map_manager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources_manager.h">

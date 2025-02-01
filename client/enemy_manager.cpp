@@ -12,10 +12,23 @@ EnemyManager* EnemyManager::instance()
     return manager;
 }
 
+void EnemyManager::enemy_init()
+{
+
+}
+
+
 void EnemyManager::enemy_on_game(const Map& map)
 {
     this->map = map;
     
+    Enemy* enemy = new EnemyPig();
+    enemy->set_position(Vector2(0, 0));
+    enemy->set_move_range(map.area);
+    enemy->reset_current_anim();
+    enemy->reset_hp();
+    enemys.push_back(enemy);
+
     timer_Spawnedge.set_wait_time(this->map.enemy_pig_spawnl_interva);
     timer_Spawnedge.set_one_shot(false);
     timer_Spawnedge.set_on_timeout([&]()
@@ -76,6 +89,14 @@ void EnemyManager::set_move_range(const Vector2& area)
     for (auto itor : enemys)
     {
         itor->set_move_range(area);
+    }
+}
+
+void EnemyManager::set_target_position(const Vector2& position)
+{
+    for (auto itor : enemys)
+    {
+        itor->set_target_position(position);
     }
 }
 
