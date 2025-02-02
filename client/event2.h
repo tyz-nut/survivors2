@@ -7,6 +7,7 @@ public:
 	static Event2* instance();
 
 public:
+	bool is_debug = false;
 	bool is_quit = false;
 	bool is_game_start = false;
 

@@ -37,15 +37,19 @@ public:
 
     void reset_current_anim();
 
+    void set_random_num(int num);
+
     void set_move_range(const Vector2& area);
 
-    void set_target_position(const Vector2& position);
+    /*void set_target_position(const Vector2& position);*/
 
     /*void set_players_position(std::vector<Vector2>& positions);
 
     void set_players_velocity(std::vector<Vector2>& velocitys);*/
 
     Enemy* set_enemyType(Enemy* enemy, EnemyType type);
+
+     const int get_enemy_pig_num() const;
 
     void on_update(float delta);
 
@@ -55,6 +59,7 @@ private:
     static EnemyManager* manager;
     Map map;
     int enemy_pig_num = 0;
+    int enemy_random_num = 0;
     Timer timer_Spawnedge;
 
 private:

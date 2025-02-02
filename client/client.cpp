@@ -71,6 +71,17 @@ int main(int argc, char** argv)
 		while (peekmessage(&msg))
 		{
 			SceneManager::instance()->on_input(msg);
+
+			switch (msg.message)
+			{
+			case WM_KEYUP:
+				//Q
+				if (msg.vkcode == 0x51)
+					Event2::instance()->is_debug = !Event2::instance()->is_debug;
+				break;
+			default:
+				break;
+			}
 		}
 
 		//处理游戏更新
@@ -84,6 +95,11 @@ int main(int argc, char** argv)
 		cleardevice();
 
 		SceneManager::instance()->on_render();
+		if (Event2::instance()->is_debug)
+		{
+			settextcolor(RGB(255, 0, 0));
+			outtextxy(15, 15, _T("已开启调试模式，按‘Q’关闭"));
+		}
 
 		FlushBatchDraw();
 

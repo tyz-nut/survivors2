@@ -1,6 +1,8 @@
 #ifndef _GAME_SCENE_H_
 #define _GAME_SCENE_H_
 
+#include <codecvt>
+
 #include "scene.h"
 #include "timer.h"
 #include "countdown.h"
@@ -8,7 +10,6 @@
 #include "player_manager.h"
 #include "enemy_manager.h"
 
-extern bool is_debug;
 extern httplib::Client* client;
 extern Player* player_self;
 extern std::vector<Player*> players;
@@ -57,17 +58,20 @@ public:
                     std::vector<Vector2> position;
                     std::vector<Vector2> velocity;
                     split_string(result->body, information, '/');
-                    for (size_t i = 0; i < information.size(); i++)
+                    for (size_t i = 0; i < players.size(); i++)
                     {
+                        if(player_self->get_id() == i)
+                            continue;
                         std::vector<std::string> info;
                         split_string(information[i], info, ';');
                         players[i]->set_position(Vector2::stoV(info[0]));
                         players[i]->set_velocity(Vector2::stoV(info[1]));
                     }
+                    EnemyManager::instance()->set_random_num(std::stoi(information[players.size()]));
                     /*std::cout << "id == 0 " + players[0]->get_position().Vtos() + ";" + players[0]->get_velocity().Vtos() << " / ";
                     std::cout << "id == 1 " + players[1]->get_position().Vtos() + ";" + players[1]->get_velocity().Vtos() << std::endl;*/
 				}
-				std::this_thread::sleep_for(nanoseconds(1000000000 / 10));
+				std::this_thread::sleep_for(nanoseconds(1000000000 / 60));
 			}
 		}).detach();
 
@@ -136,7 +140,11 @@ public:
 
         if (stage == GameStage::Racing)
         {
-            EnemyManager::instance()->set_target_position(player_self_position);
+            for (Enemy* enemy : enemys)
+            {
+                int target = enemy->get_random_num() % players.size();
+                enemy->set_target_position(players[target]->get_position());
+            }
             EnemyManager::instance()->on_update(delta);
             std::cout << enemys[0]->get_position().Vtos() << std::endl;
             /*if ((id_player == 1 && progress_1 >= num_total_char)
@@ -224,6 +232,21 @@ public:
             countdown->on_render(camera_ui);
         }
 
+        if (stage == GameStage::Racing && Event2::instance()->is_debug)
+        {
+            static std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> convert;
+            settextcolor(RGB(255, 0, 0));
+            std::string str = "玩家位置：" + player_self_position.Vtos();
+            std::wstring wstr = convert.from_bytes(str);
+            outtextxy(15, 25, wstr.c_str());
+            str = "玩家速度：" + player_self_velocity.Vtos();
+            wstr = convert.from_bytes(str);
+            outtextxy(15, 35, wstr.c_str());
+            str = "野猪数量：" + std::to_string(EnemyManager::instance()->get_enemy_pig_num());
+            wstr = convert.from_bytes(str);
+            outtextxy(15, 45, wstr.c_str());
+        }
+
 //
 //        for (const Bullet* bullet : bullet_list)
 //            bullet->on_draw(camera);
@@ -268,30 +291,12 @@ public:
 //                outtextxy(185, rect_textbox.y + 65, wstr_completed.c_str());
 //            }
 //        }
-
-        
-        if (is_debug)
-        {
-            settextcolor(RGB(255, 0, 0));
-            outtextxy(15, 15, _T("已开启调试模式，按‘Q’关闭"));
-        }
     }
 
     void on_input(const ExMessage& msg)
     {
         if(stage == GameStage::Racing)
             PlayerManager::instance()->on_input(msg);
-
-        switch (msg.message)
-        {
-        case WM_KEYUP:
-            //Q
-            if (msg.vkcode == 0x51)
-                is_debug = !is_debug;
-            break;
-        default:
-            break;
-        }
     }
 //
 //    void on_exit()
@@ -315,7 +320,6 @@ private:
     Map map;
     IMAGE* img_background;
     GameStage stage = GameStage::Ready;
-    bool is_debug = false;
 
     Countdown* countdown;
 

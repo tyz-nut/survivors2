@@ -68,6 +68,16 @@ public:
 
     virtual void reset_hp() {}
 
+    void set_random_num(int num)
+    {
+        enemy_random_num = num;
+    }
+
+    const int get_random_num() const
+    {
+        return enemy_random_num;
+    }
+
     void set_target_position(const Vector2 position)
     {
         this->target_position = position;
@@ -90,6 +100,7 @@ public:
 
 protected:
     int enemy_hp = 1;
+    int enemy_random_num = 0;
     Vector2 position;
     Vector2 target_position;
     Vector2 velocity;

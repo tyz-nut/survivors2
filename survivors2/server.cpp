@@ -8,6 +8,7 @@
 
 std::mutex g_mutex;			//全局互斥锁
 int player_num = 0;
+int random_num = 0;
 const int player_max_num = 2;
 PlayerServer* player_1 = new PlayerServer();
 PlayerServer* player_2 = new PlayerServer();
@@ -28,12 +29,22 @@ static void split_string(const std::string& s, std::vector<std::string>& v, cons
 	}
 }
 
-
 int main(int argc, char** argv)
 {
 	httplib::Server server;
 	std::cout << "服务器已搭建";
 
+	std::thread([&]()
+		{
+			while (true)
+			{
+				using namespace std::chrono;
+
+				random_num = rand();
+
+				std::this_thread::sleep_for(nanoseconds(1000000000 / 10));
+			}
+		}).detach();
 
 	server.Post("/login", [&](const httplib::Request& req, httplib::Response& res)
 		{
@@ -68,14 +79,14 @@ int main(int argc, char** argv)
 			players[id]->set_position(Vector2::stoV(information[1]));
 			players[id]->set_velocity(Vector2::stoV(information[2]));
 
-			std::cout << "id == 0 " + players[0]->get_position().Vtos() + ";" + players[0]->get_velocity().Vtos() << " / ";
-			std::cout << "id == 1 " + players[1]->get_position().Vtos() + ";" + players[1]->get_velocity().Vtos() << std::endl;
-
+			/*std::cout << "id == 0 " + players[0]->get_position().Vtos() + ";" + players[0]->get_velocity().Vtos() << " / ";
+			std::cout << "id == 1 " + players[1]->get_position().Vtos() + ";" + players[1]->get_velocity().Vtos() << std::endl;*/
 			str = "";
 			for (size_t i = 0; i < players.size(); i++)
 			{
 				str += players[i]->get_position().Vtos() + ";" + players[i]->get_velocity().Vtos() + ";/";
 			}
+			str += std::to_string(random_num) + "/";
 			res.set_content(str, "text/plain");
 		});
 
