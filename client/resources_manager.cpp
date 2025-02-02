@@ -63,8 +63,8 @@ static const std::vector<AtlasResInfo> atlas_info_list =
     { "paimeng_left",               _T(R"(resources/paimeng/player_left_%d.png)"),          6},
     { "paimeng_right",              _T(R"(resources/paimeng/player_right_%d.png)"),         6},
 
-    { "pig_left",                   _T(R"(resources/pig/player_left_%d.png)"),              6},
-    { "pig_right",                  _T(R"(resources/pig/player_right_%d.png)"),             6},
+    { "pig_left",                   _T(R"(resources/pig/enemy_left_%d.png)"),              6},
+    { "pig_right",                  _T(R"(resources/pig/enemy_right_%d.png)"),             6},
 };
 
 ResourcesManager* ResourcesManager::manager = nullptr;

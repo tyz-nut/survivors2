@@ -23,8 +23,8 @@ public:
 
 	void map_init()
 	{
-		error = { 0,"",Vector2(0, 0), Vector2(0, 0), 0, 0 };
-		map_default = { 0, "default", Vector2(2560, 1440), Vector2(1280, 720), 1, 20 };
+		error = { -1,"",Vector2(0, 0), Vector2(0, 0), 0, 0 };
+		map_default = { 0, "default", Vector2(2560 * 2, 1440 * 2), Vector2(1280 * 2, 720 * 2), 1, 20 };
 		maps.push_back(&map_default);
 	}
 
