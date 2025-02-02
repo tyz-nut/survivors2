@@ -95,7 +95,6 @@ protected:
     Vector2 velocity;
     Vector2 background;
     Animation* current_anim = nullptr;
-    bool facing_left = false;
     bool alive = true;
     CollisionBox* hit_box = nullptr;
     CollisionBox* hurt_box = nullptr;

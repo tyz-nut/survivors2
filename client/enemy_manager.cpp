@@ -42,23 +42,23 @@ void EnemyManager::enemy_on_game(const Map& map)
                 position.y = -80;
                 break;
             case Spawnedge::Down:
-                position.x = rand() % (int)this->map.area.x;
+                position.x = float(rand() % (int)this->map.area.x);
                 position.y = -80;
                 break;
             case Spawnedge::Left:
                 position.x = -80;
-                position.y = rand() % (int)this->map.area.y;
+                position.y = float(rand() % (int)this->map.area.y);
                 break;
             case Spawnedge::Right:
                 position.x = -map.area.x;
-                position.y = rand() % (int)this->map.area.x;
+                position.y = float(rand() % (int)this->map.area.x);
                 break;
             }
             if(enemy_pig_num <= this->map.enemy_pig_max_num)
             {
                 Enemy* enemy = new EnemyPig();
                 enemy->set_position(position);
-                enemy->set_move_range(map.area);
+                enemy->set_move_range(this->map.area);
                 enemy->reset_current_anim();
                 enemy->reset_hp();
                 enemys.push_back(enemy);

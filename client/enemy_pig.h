@@ -22,8 +22,8 @@ public:
 
     void on_update(float delta)
     {
-        int dir_x = target_position.x - position.x;
-        int dir_y = target_position.y - position.y;
+        int dir_x = (int)(target_position.x - position.x);
+        int dir_y = (int)(target_position.y - position.y);
         Vector2 dir = Vector2((float)dir_x, (float)dir_y).normalize();
         velocity = dir * SPEED_RUN;
         position += velocity * delta;
@@ -50,12 +50,11 @@ public:
     {
         static const Rect rect_shadow =
         {
-            position.x + (ENEMY_WIDTH / 2 - SHADOW_WIDTH / 2),
-            position.y + ENEMY_HEIGHT - 35,
+            (int)position.x + (ENEMY_WIDTH / 2 - SHADOW_WIDTH / 2),
+            (int)position.y + ENEMY_HEIGHT - 35,
             img_shadow->getwidth(), img_shadow->getheight()
         };
         putimage_ex(camera, img_shadow, &rect_shadow);
-
 
         Enemy::on_render(camera);
     }
@@ -82,8 +81,7 @@ private:
     const int SHADOW_WIDTH = 48;
 
 private:
-    const int SPEED_RUN = 200;
-    bool alive = true;
+    const float SPEED_RUN = 200.0f;
 };
 
 #endif
